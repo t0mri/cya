@@ -1,0 +1,17 @@
+= cya
+:author: t0mri
+:revnumber: 0.0.1
+
+Pronounced as `+see ya+`. 'c' for c and 'ya' for YouTube
+
+== Introduction
+*{doctitle}* is a program written in `c` to surf and watch Youtube videos from tty!
+It's intended for educational purposes, to explore how YouTube search results
+can be programmatically accessed and manipulated
+
+[IMPORTANT]
+====
+Please note that this project is intended for educational purposes only.
+It is not intended to be used in a manner that violates YouTube's Terms of
+Service or Google's policies.
+====
