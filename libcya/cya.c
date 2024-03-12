@@ -30,14 +30,12 @@ static size_t write_function(void *data, size_t size, size_t nmemb,
   return realsize;
 }
 
-char *data;
-
 char *cya_search(char *query) {
   char *baseURL = "https://www.youtube.com/results?search_query=",
        *encoded_query, *url,
        *start_delimiter_substring = "itemSectionRenderer\":",
        *end_delimiter_substring = "},{\"continuationItemRenderer",
-       *data_extract;
+       *data_extract, *data;
   size_t data_extract_length;
 
   CURLcode response_status_code;
@@ -102,10 +100,4 @@ char *cya_search(char *query) {
   curl_easy_cleanup(curl);
   curl_free(encoded_query);
   return data;
-}
-
-void cya_save_json(char *file_name) {
-  FILE *file = fopen(file_name, "w");
-  fputs(data, file);
-  fclose(file);
 }
