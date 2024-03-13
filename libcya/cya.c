@@ -107,8 +107,9 @@ char *cya_search(char *query) {
   return data;
 }
 
-constructed_data **cya_parse(char *buffer) {
-  constructed_data **data;
+cya_parse_result *cya_parse(char *buffer) {
+  cya_parse_data **data;
+  cya_parse_result *result;
   cJSON *json, *contents;
   int8_t contents_length, data_index = 0;
 
@@ -122,7 +123,7 @@ constructed_data **cya_parse(char *buffer) {
   contents = cJSON_GetObjectItem(json, "contents");
   contents_length = cJSON_GetArraySize(contents);
 
-  data = malloc(contents_length * sizeof(constructed_data));
+  data = malloc(contents_length * sizeof(cya_parse_data));
 
   for (int i = 0; i < contents_length; i++) {
     cJSON *content = cJSON_GetArrayItem(contents, i);
@@ -146,15 +147,18 @@ constructed_data **cya_parse(char *buffer) {
     // extract video id
     cJSON *video_id = cJSON_GetObjectItem(videoRenderer, "videoId");
 
-    data[data_index] = malloc(sizeof(constructed_data));
+    data[data_index] = malloc(sizeof(cya_parse_data));
 
     data[data_index]->title = cJSON_GetStringValue(title);
     data[data_index]->channel = cJSON_GetStringValue(channel);
     data[data_index]->video_id = cJSON_GetStringValue(video_id);
 
-    printf("%s\n", data[data_index]->video_id);
     data_index++;
   }
 
-  return data;
+  result = malloc(sizeof(cya_parse_result));
+  result->length = data_index;
+  result->data = data;
+
+  return result;
 }

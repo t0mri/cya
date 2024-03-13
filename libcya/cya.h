@@ -1,11 +1,17 @@
 #ifndef CYA_H
 #define CYA_H
 
+#include <stdint.h>
 typedef struct {
   char *title, *channel, *video_id;
-} constructed_data;
+} cya_parse_data;
+
+typedef struct {
+  cya_parse_data **data;
+  int8_t length;
+} cya_parse_result;
 
 char *cya_search(char *query);
-constructed_data **cya_parse(char *buffer);
+cya_parse_result *cya_parse(char *buffer);
 
 #endif // !CYA_H

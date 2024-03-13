@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
 
   char *query = malloc(0), *buffer;
   cJSON *json;
-  constructed_data **data;
-  int8_t data_length = 0;
+  cya_parse_result *result;
+  int8_t data_length = 0, user_choice;
 
   for (int i = 1; i < argc; i++) {
     query = realloc(query, strlen(query) + strlen(argv[i]));
@@ -30,17 +30,24 @@ int main(int argc, char *argv[]) {
   buffer = cya_search(query);
   free(query);
 
-  data = cya_parse(buffer);
+  result = cya_parse(buffer);
   free(buffer);
 
-  for (int i = 0; data[i]; i++) {
-    printf("Title: %s\nChanel: %s\nVideo id: %s\n\n", data[i]->title,
-           data[i]->channel, data[i]->video_id);
+  for (int8_t i = result->length - 1; i >= 0; i--) {
+    printf("%d: %s\n", i, result->data[i]->title);
   }
 
-  printf("PROCESS COMPLETED\n");
+  printf("Your choice: ");
+  while (scanf("%hhu", &user_choice) != 1 || user_choice >= result->length ||
+         user_choice < 0) {
+    printf("Invalid choice. Please enter a number between 0 and %d.\n",
+           result->length - 1);
+    while (getchar() != '\n');
+    printf("Your choice: ");
+  }
 
-  // cJSON_Delete(json);
-  // free(data);
+  printf("Your choice is: %d\n", user_choice);
+
+  free(result);
   return EXIT_SUCCESS;
 }
