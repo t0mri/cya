@@ -13,5 +13,6 @@ typedef struct {
 
 char *cya_search(char *query);
 cya_parse_result *cya_parse(char *buffer);
+void cya_play(cya_parse_data *data);
 
 #endif // !CYA_H

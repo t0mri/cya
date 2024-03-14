@@ -1,6 +1,7 @@
 #include "cya.h"
 #include <cjson/cJSON.h>
 #include <curl/curl.h>
+#include <mpv/client.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +11,8 @@
 #define EXIT_FAILURE_TOO_FEW_ARGUMENTS 20
 #define EXIT_FAILURE_MEMORY_ALLOCATION 30
 #define EXIT_FAILURE_DATA_FETCH 40
+#define EXIT_FAILURE_MPV_CREATE 50
+#define EXIT_FAILURE_MPV_INIT 60
 
 #define EXIT_FAILURE_JSON_PARSE 50
 
@@ -161,4 +164,27 @@ cya_parse_result *cya_parse(char *buffer) {
   result->data = data;
 
   return result;
+}
+
+void cya_play(cya_parse_data *data) {
+  char *watch_url = "https://www.youtube.com/watch?v=", *url;
+  int error;
+
+  if (system("mpv --version > /dev/null 2>&1")) {
+    printf("Error: mpv is not installed\n");
+    exit(EXIT_FAILURE_MPV_CREATE);
+  }
+
+  url = malloc((strlen(watch_url) + strlen(data->video_id)) * sizeof(char) + 1);
+  strcpy(url, watch_url);
+  strcat(url, data->video_id);
+
+  char *command = malloc(sizeof("mpv ") + strlen(url) * sizeof(char) + 1);
+  strcpy(command, "mpv ");
+  strcat(command, url);
+
+  printf("Playing: %s by %s", data->title, data->channel);
+  system(command);
+
+  exit(EXIT_SUCCESS);
 }

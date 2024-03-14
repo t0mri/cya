@@ -42,11 +42,12 @@ int main(int argc, char *argv[]) {
          user_choice < 0) {
     printf("Invalid choice. Please enter a number between 0 and %d.\n",
            result->length - 1);
-    while (getchar() != '\n');
+    while (getchar() != '\n')
+      ;
     printf("Your choice: ");
   }
 
-  printf("Your choice is: %d\n", user_choice);
+  cya_play(result->data[user_choice]);
 
   free(result);
   return EXIT_SUCCESS;
