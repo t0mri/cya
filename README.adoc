@@ -10,6 +10,8 @@ pronounced as `see ya`. 'c' for c and 'ya' for youtube
 youtube videos from tty/cli! it's intended for educational purposes, to explore
 how youtube search results can be programmatically accessed and manipulated
 
+video::https://github.com/t0mri/cya/assets/123792488/39e7e710-4c3d-4f3b-8912-cc2ae67aa334[]
+
 == installation
 
 you can download the binary form https://github.com/t0mri/cya/releases[releases]
