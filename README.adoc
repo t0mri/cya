@@ -1,17 +1,42 @@
 = cya
 :author: t0mri
 :revnumber: 0.0.1
+:toc:
 
-Pronounced as `+see ya+`. 'c' for c and 'ya' for YouTube
+pronounced as `see ya`. 'c' for c and 'ya' for youtube
 
-== Introduction
-*{doctitle}* is a program written in `c` to surf and watch Youtube videos from tty!
-It's intended for educational purposes, to explore how YouTube search results
-can be programmatically accessed and manipulated
+== introduction
+*{doctitle}* is a program written in `c` to search (unlimited) and watch
+youtube videos from tty/cli! it's intended for educational purposes, to explore
+how youtube search results can be programmatically accessed and manipulated
+
+== installation
+
+you can download the binary form https://github.com/t0mri/cya/releases[releases]
+page or https://github.com/t0mri/cya?tab=readme-ov-file#building[compile] it
+yourself, which *takes less than one seconod*
+
+=== building
+
+*1. get a local copy*
+[source,bash]
+----
+git clone https://github.com/t0mri/cya && cd cya
+----
+*2. compile*
+[source,bash]
+----
+gcc -o cya main.c libcya/cya.c -lcurl -lcjson
+----
+that's it, now youre ready *make your first cya search with `./cya <your_query>`*
+
+== caveat
+
+- youd have to download about 1mb response, instead of 800kb one
 
 [IMPORTANT]
 ====
-Please note that this project is intended for educational purposes only.
-It is not intended to be used in a manner that violates YouTube's Terms of
-Service or Google's policies.
+please note that this project is intended for educational purposes only.
+it is not intended to be used in a manner that violates youtube's terms of
+service or google's policies.
 ====
