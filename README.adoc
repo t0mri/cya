@@ -28,7 +28,7 @@ git clone https://github.com/t0mri/cya && cd cya
 *2. compile*
 [source,bash]
 ----
-gcc -o cya main.c libcya/cya.c -lcurl -lcjson
+gcc -o cya main.c libcya/cya.c -lcurl -lcjson -lmpv
 ----
 that's it, now youre ready *make your first cya search with `./cya <your_query>`*
 
