@@ -167,24 +167,32 @@ cya_parse_result *cya_parse(char *buffer) {
 }
 
 void cya_play(cya_parse_data *data) {
-  char *watch_url = "https://www.youtube.com/watch?v=", *url;
-  int error;
+  char *watch_url = "https://www.youtube.com/watch?v=", *constructed_url;
 
-  if (system("mpv --version > /dev/null 2>&1")) {
-    printf("Error: mpv is not installed\n");
+  mpv_handle *mpv = mpv_create();
+  if (!mpv) {
+    printf("Error: creating mpv instance\n");
     exit(EXIT_FAILURE_MPV_CREATE);
   }
 
-  url = malloc((strlen(watch_url) + strlen(data->video_id)) * sizeof(char) + 1);
-  strcpy(url, watch_url);
-  strcat(url, data->video_id);
+  mpv_initialize(mpv);
 
-  char *command = malloc(sizeof("mpv ") + strlen(url) * sizeof(char) + 1);
-  strcpy(command, "mpv ");
-  strcat(command, url);
+  constructed_url =
+      malloc((strlen(watch_url) + strlen(data->video_id)) * sizeof(char) + 1);
+  sprintf(constructed_url, "%s%s", watch_url, data->video_id);
 
-  printf("Playing: %s by %s", data->title, data->channel);
-  system(command);
+  const char *command[] = {"loadfile", constructed_url, NULL};
+  mpv_command(mpv, command);
 
+  printf("Playing %s by %s\n", data->title, data->channel);
+
+  while (1) {
+    mpv_event *event = mpv_wait_event(mpv, 10000);
+    if (event->event_id == MPV_EVENT_SHUTDOWN ||
+        event->event_id == MPV_EVENT_IDLE)
+      break;
+  }
+
+  mpv_terminate_destroy(mpv);
   exit(EXIT_SUCCESS);
 }
