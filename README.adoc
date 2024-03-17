@@ -1,3 +1,9 @@
+[IMPORTANT]
+====
+*this project has been moved to codeberg*
+*link*: https://codeberg.org/t0mri/cya[https://codeberg.org/t0mri/cya]
+====
+
 = cya
 :author: t0mri
 :revnumber: 0.0.1
